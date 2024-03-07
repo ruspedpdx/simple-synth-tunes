@@ -27,14 +27,29 @@ def play_sine(frequency):
 def key_listener():
     while True:
         if keyboard.is_pressed('a'):
+            play_sine(174.61)
+        if keyboard.is_pressed('s'):
+            play_sine(196.00)
+        if keyboard.is_pressed('d'):
+            play_sine(220.00)
+        if keyboard.is_pressed('f'):
+            play_sine(246.94)
+        if keyboard.is_pressed('h'):
             play_sine(261.63)
+        if keyboard.is_pressed('j'):
+            play_sine(293.66)
+        if keyboard.is_pressed('k'):
+            play_sine(329.63)
+        if keyboard.is_pressed('l'):
+            play_sine(349.23)
+
 
 def main():
     # Start the keyboard listener in a separate thread
     threading.Thread(target=key_listener, daemon=True).start()
     
     # Main loop
-    print("Press 'a' to play a sine wave of frequency 261.63 Hz.")
+    print("Press any key on the home row to play a note.")
     print("Press 'q' to quit.")
     while True:
         if keyboard.is_pressed('q'):
