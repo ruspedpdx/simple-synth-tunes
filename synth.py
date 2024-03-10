@@ -1,48 +1,63 @@
-import pyo
+import sounddevice as sd
+from numpy import random
+from scipy.io import wavfile
+from scipy.io.wavfile import write
 import keyboard
 import threading
+import numpy as np
 
+# Play and return sine wave of given frequency
 def play_sine(frequency):
-    # Create Pyo server
-    server = pyo.Server().boot()
-    
-    # Create sine wave oscillator
-    sine = pyo.Sine(freq=frequency, mul=0.5)
-    
-    # Start the server
-    server.start()
-    
-    # Start the sine wave oscillator
-    sine.out()
-    
-    # Wait for one second
-    pyo.time.sleep(1)
-    
-    # Stop the sine wave oscillator
-    sine.stop()
-    
-    # Stop the server
-    server.stop()
+    sine_output_samples = []
+    amplitude = 8192
+    sample_rate = 48000
+    duration = 0.2727  # Duration in seconds
+
+    num_samples = int(sample_rate * duration)
+    time = np.arange(num_samples) / sample_rate
+    sine_wave = amplitude * np.sin(2 * np.pi * frequency * time)
+
+    # Play the square wave
+    sd.play(sine_wave, sample_rate)
+    sd.wait()
+
+    # append samples to output
+    sine_output_samples = np.append(sine_output_samples, sine_wave)
+    return sine_output_samples
+
+# Write array to wav file
+def write_wav_file(filename, sample_rate, samples):
+    write(filename, sample_rate, samples)
 
 def key_listener():
+    sine = []
     while True:
         if keyboard.is_pressed('a'):
-            play_sine(174.61)
+            new_sine = play_sine(174.61)
+            sine = np.append(sine, new_sine)
         if keyboard.is_pressed('s'):
-            play_sine(196.00)
+            new_sine = play_sine(196.00)
+            sine = np.append(sine, new_sine)
         if keyboard.is_pressed('d'):
-            play_sine(220.00)
+            new_sine = play_sine(220.00)
+            sine = np.append(sine, new_sine)
         if keyboard.is_pressed('f'):
-            play_sine(246.94)
+            new_sine = play_sine(246.94)
+            sine = np.append(sine, new_sine)
         if keyboard.is_pressed('h'):
-            play_sine(261.63)
+            new_sine = play_sine(261.63)
+            sine = np.append(sine, new_sine)
         if keyboard.is_pressed('j'):
-            play_sine(293.66)
+            new_sine = play_sine(293.66)
+            sine = np.append(sine, new_sine)
         if keyboard.is_pressed('k'):
-            play_sine(329.63)
+            new_sine = play_sine(329.63)
+            sine = np.append(sine, new_sine)
         if keyboard.is_pressed('l'):
-            play_sine(349.23)
-
+            new_sine = play_sine(349.23)
+            sine = np.append(sine, new_sine)
+        sine = np.asarray(sine, dtype=np.int16)
+        write_wav_file("project.wav", 48000, sine)
 
 def main():
     # Start the keyboard listener in a separate thread
