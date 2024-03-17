@@ -1,0 +1,15 @@
+{
+    "launch": {
+        "configurations": [],
+        "compounds": []
+    },
+    // use clippy on save
+    "rust-analyzer.checkOnSave": true,
+    "rust-analyzer.check.command": "clippy",
+
+    // do formatting on save
+    "editor.formatOnSave": true,
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    },
+}
