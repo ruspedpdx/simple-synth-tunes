@@ -7,6 +7,14 @@ import keyboard
 import threading
 import numpy as np
 
+# Start menu
+def menu():
+    print("Press any key on the home row to play a note.")
+    print("Press 't' to randomly change wave type.")
+    print("Press 'r' to randomly change tuning.")    
+    print("Press 'v' to randomly amplitude.") 
+    print("Press 'q' to quit.")
+
 # Get wav type
 def get_type():
     wave = ["Sine", "Square", "Sawtooth", "Noise"]
@@ -14,12 +22,83 @@ def get_type():
     print(f"Wave type of {type} chosen")
     return type
 
+# Select wave type
+def select_type():
+    wave = ["Sine", "Square", "Sawtooth", "Noise"]
+    while True:
+        try:
+            wave_type = int(input("Select the wave type: 0:Sine 1:Square 2:Sawtooth 3:Noise"))
+        except ValueError:
+            print("Sorry, I didn't understand that.")
+            continue
+        if wave_type < 0:
+            print("please choose between 0 and 3.")
+            continue
+        if wave_type > 3:
+            print("please choose between 0 and 3.")
+            continue
+        else:
+             break
+    sign = wave[wave_type]
+    print(f"Wave of {sign} type chosen")
+    return sign
+
+# Get amplitude
+def get_ampl():
+    amplitude = [4096, 8192, 16384]
+    amp = random.choice(amplitude)
+    print(f"Amplitude of {amp} chosen")
+    return amp
+
+# Select wave type
+def select_ampl():
+    amplitude = [4096, 8192, 16384]
+    while True:
+        try:
+            amp_size = int(input("Select the amplitude: 0:Half, 1:Normal, 2:Double"))
+        except ValueError:
+            print("Sorry, I didn't understand that.")
+            continue
+        if amp_size < 0:
+            print("please choose between 0 and 2.")
+            continue
+        if amp_size > 3:
+            print("please choose between 0 and 2.")
+            continue
+        else:
+             break
+    amp = amplitude[amp_size]
+    print(f"Amplitude of {amp} chosen")
+    return amp
+
+
 # Get key signature
 def get_key():
     keys = ["C", "G", "D", "A", "E", "B", "F", "F#", "Db", "Ab" "Eb", "Bb"]
     key = random.choice(keys)
     print(f"Key of {key} chosen")
     return key
+
+# Get key signature
+def select_key():
+    keys = ["C", "G", "D", "A", "E", "B", "F", "F#", "Db", "Ab", "Eb", "Bb"]
+    while True:
+        try:
+            key = int(input("Select the key: 0:C 1:G 2:D 3:A 4:E 5:B 6:F 7:F# 8:Db 9:Ab 10:Eb 11:Bb"))
+        except ValueError:
+            print("Sorry, I didn't understand that.")
+            continue
+        if key < 0:
+            print("please choose between 0 and 11.")
+            continue
+        if key > 11:
+            print("please choose between 0 and 11.")
+            continue
+        else:
+             break
+    sign = keys[key]
+    print(f"Key of {sign} chosen")
+    return sign
 
 # return frequencies of given key
 def get_frequencies(key):
@@ -52,6 +131,28 @@ def get_frequencies(key):
             print("Invalid key signature!")
     return frequencies
 
+# Play and return sine wave of given frequency
+def play_wave(type, frequency, amplitude, duration):
+    output_samples = []
+    sample_rate = 48000
+
+    num_samples = int(sample_rate * duration)
+    time = np.arange(num_samples) / sample_rate
+    if type == "Sine":
+        wave = amplitude * np.sin(2 * np.pi * frequency * time)
+    elif type == "Square":
+        wave = amplitude * np.sign(np.sin(2 * np.pi * frequency * time))
+    elif type == "Sawtooth":
+        wave = amplitude * sawtooth(2 * np.pi * frequency * time)
+    else:
+        wave = play_noise()
+    # Play the wave
+    sd.play(wave, sample_rate)
+    sd.wait()
+
+    # append samples to output
+    output_samples = np.append(output_samples, wave)
+    return output_samples
 
 # Play and return sine wave of given frequency
 def play_sine(frequency):
@@ -134,101 +235,59 @@ def write_wav_file(filename, sample_rate, samples):
     write(filename, sample_rate, samples)
 
 def key_listener():
-    wav_type = get_type()
-    tuning = get_key()
-    sine = []
+    # Start up settings
+    wav_type = select_type()
+    tuning = select_key()
+    amplitude = 8192
+    out_wav = []
     freq = get_frequencies(tuning)
+    menu()
     while True:
+        if keyboard.is_pressed('t'):
+            wav_type == ""
+            wav_type = get_type()
+            menu()
+        if keyboard.is_pressed('v'):
+            amplitude == ""
+            amplitude = get_ampl()
+            menu()
+        if keyboard.is_pressed('r'):
+            freq == []
+            tuning = get_key()
+            freq = get_frequencies(tuning)
+            menu()
         if keyboard.is_pressed('a'):
-            if wav_type == "Sine":
-                new_wav = play_sine(freq[0])
-            elif wav_type == "Square": 
-                new_wav = play_square(freq[0])
-            elif wav_type == "Sawtooth":
-                new_wav = play_sawtooth(freq[0])
-            else:
-                new_wav = play_noise()
-            sine = np.append(sine, new_wav)
+            new_wav = play_wave(wav_type, freq[0], amplitude, 0.2727)
+            out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('s'):
-            if wav_type == "Sine":
-                new_wav = play_sine(freq[1])
-            elif wav_type == "Square": 
-                new_wav = play_square(freq[1])
-            elif wav_type == "Sawtooth":
-                new_wav = play_sawtooth(freq[1])
-            else:
-                new_wav = play_noise()
-            sine = np.append(sine, new_wav)
+            new_wav = play_wave(wav_type, freq[1], amplitude, 0.2727)
+            out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('d'):
-            if wav_type == "Sine":
-                new_wav = play_sine(freq[2])
-            elif wav_type == "Square": 
-                new_wav = play_square(freq[2])
-            elif wav_type == "Sawtooth":
-                new_wav = play_sawtooth(freq[2])
-            else:
-                new_wav = play_noise()
-            sine = np.append(sine, new_wav)
+            new_wav = play_wave(wav_type, freq[2], amplitude, 0.2727)
+            out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('f'):
-            if wav_type == "Sine":
-                new_wav = play_sine(freq[3])
-            elif wav_type == "Square": 
-                new_wav = play_square(freq[3])
-            elif wav_type == "Sawtooth":
-                new_wav = play_sawtooth(freq[3])
-            else:
-                new_wav = play_noise()
-            sine = np.append(sine, new_wav)
+            new_wav = play_wave(wav_type, freq[3], amplitude, 0.2727)
+            out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('h'):
-            if wav_type == "Sine":
-                new_wav = play_sine(freq[4])
-            elif wav_type == "Square": 
-                new_wav = play_square(freq[4])
-            elif wav_type == "Sawtooth":
-                new_wav = play_sawtooth(freq[4])
-            else:
-                new_wav = play_noise()
-            sine = np.append(sine, new_wav)
+            new_wav = play_wave(wav_type, freq[4], amplitude, 0.2727)
+            out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('j'):
-            if wav_type == "Sine":
-                new_wav = play_sine(freq[5])
-            elif wav_type == "Square": 
-                new_wav = play_square(freq[5])
-            elif wav_type == "Sawtooth":
-                new_wav = play_sawtooth(freq[5])
-            else:
-                new_wav = play_noise()
-            sine = np.append(sine, new_wav)
+            new_wav = play_wave(wav_type, freq[5], amplitude, 0.2727)
+            out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('k'):
-            if wav_type == "Sine":
-                new_wav = play_sine(freq[6])
-            elif wav_type == "Square": 
-                new_wav = play_square(freq[6])
-            elif wav_type == "Sawtooth":
-                new_wav = play_sawtooth(freq[6])
-            else:
-                new_wav = play_noise()
-            sine = np.append(sine, new_wav)
+            new_wav = play_wave(wav_type, freq[6], amplitude, 0.2727)
+            out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('l'):
-            if wav_type == "Sine":
-                new_wav = play_sine(freq[7])
-            elif wav_type == "Square": 
-                new_wav = play_square(freq[7])
-            elif wav_type == "Sawtooth":
-                new_wav = play_sawtooth(freq[7])
-            else:
-                new_wav = play_noise()
-            sine = np.append(sine, new_wav)
-        sine = np.asarray(sine, dtype=np.int16)
-        write_wav_file("project.wav", 48000, sine)
+            new_wav = play_wave(wav_type, freq[7], amplitude, 0.2727)
+            out_wav = np.append(out_wav, new_wav)
+        out_wav = np.asarray(out_wav, dtype=np.int16)
+        write_wav_file("project.wav", 48000, out_wav)
 
 def main():
     # Start the keyboard listener in a separate thread
     threading.Thread(target=key_listener, daemon=True).start()
     
     # Main loop
-    print("Press any key on the home row to play a note.")
-    print("Press 'q' to quit.")
     while True:
         if keyboard.is_pressed('q'):
             break
