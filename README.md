@@ -27,7 +27,7 @@ good and bad input.
 
 The project1.wav, project2.wav and project3.wav files are output from various tests.
 
-# Debrief
+# Process notes
 
 I first tried to write a simple function to play a sine wave when a key was pressed using 
 the termion and rodio crates in Rust. I was never able to get the sine wave to play and save, 
