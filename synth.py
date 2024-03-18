@@ -348,45 +348,45 @@ def key_listener():
     freq = get_frequencies(tuning)
     menu()
     while True:
-        if keyboard.is_pressed("t"):
+        if keyboard.read_key() == "t":
             wav_type == ""
             wav_type = get_type()
             menu()
-        if keyboard.is_pressed("v"):
+        if keyboard.read_key() == "v":
             amplitude == ""
             amplitude = get_ampl()
             menu()
-        if keyboard.is_pressed("o"):
+        if keyboard.read_key() == "o":
             octave == ""
             octave = get_oct()
             menu()
-        if keyboard.is_pressed("r"):
+        if keyboard.read_key() == "r":
             freq == []
             tuning = get_key()
             freq = get_frequencies(tuning)
             menu()
-        if keyboard.is_pressed("a"):
+        if keyboard.read_key() == "a":
             new_wav = play_wave(wav_type, freq[0], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed("s"):
+        if keyboard.read_key() == "s":
             new_wav = play_wave(wav_type, freq[1], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed("d"):
+        if keyboard.read_key() == "d":
             new_wav = play_wave(wav_type, freq[2], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed("f"):
+        if keyboard.read_key() == "f":
             new_wav = play_wave(wav_type, freq[3], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed("h"):
+        if keyboard.read_key() == "h":
             new_wav = play_wave(wav_type, freq[4], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed("j"):
+        if keyboard.read_key() == "j":
             new_wav = play_wave(wav_type, freq[5], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed("k"):
+        if keyboard.read_key() == "k":
             new_wav = play_wave(wav_type, freq[6], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed("l"):
+        if keyboard.read_key() == "l":
             new_wav = play_wave(wav_type, freq[7], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
         out_wav = np.asarray(out_wav, dtype=np.int16)
@@ -399,7 +399,7 @@ def main():
 
     # Main loop
     while True:
-        if keyboard.is_pressed("q"):
+        if keyboard.read_key() == "q":
             time.sleep(2)
             break
 
