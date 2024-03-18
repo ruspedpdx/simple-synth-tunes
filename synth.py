@@ -3,8 +3,8 @@ from numpy import random
 from scipy.io import wavfile
 from scipy.io.wavfile import write
 from scipy.signal import sawtooth
-import keyboard
-import threading
+import msvcrt
+import sys
 import numpy as np
 import time
 
@@ -338,7 +338,7 @@ def write_wav_file(filename, sample_rate, samples):
     write(filename, sample_rate, samples)
 
 
-def key_listener():
+def start_synth():
     # Start up settings
     wav_type = select_type()
     tuning = select_key()
@@ -348,61 +348,64 @@ def key_listener():
     freq = get_frequencies(tuning)
     menu()
     while True:
-        if keyboard.read_key() == "t":
+        key = ''
+        key = input("Enter after each key input>>>")
+        if key == 'q':
+            time.sleep(2)
+            break
+        elif key == 't':
             wav_type == ""
             wav_type = get_type()
             menu()
-        if keyboard.read_key() == "v":
+        elif key == 'v':
             amplitude == ""
             amplitude = get_ampl()
             menu()
-        if keyboard.read_key() == "o":
+        elif key == 'o':
             octave == ""
             octave = get_oct()
             menu()
-        if keyboard.read_key() == "r":
+        elif key == 'r':
             freq == []
             tuning = get_key()
             freq = get_frequencies(tuning)
             menu()
-        if keyboard.read_key() == "a":
+        elif key == 'a':
             new_wav = play_wave(wav_type, freq[0], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.read_key() == "s":
+        elif key == 's':
             new_wav = play_wave(wav_type, freq[1], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.read_key() == "d":
+        elif key == 'd':
             new_wav = play_wave(wav_type, freq[2], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.read_key() == "f":
+        elif key == 'f':
             new_wav = play_wave(wav_type, freq[3], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.read_key() == "h":
+        elif key == 'h':
             new_wav = play_wave(wav_type, freq[4], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.read_key() == "j":
+        elif key == 'j':
             new_wav = play_wave(wav_type, freq[5], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.read_key() == "k":
+        elif key == 'k':
             new_wav = play_wave(wav_type, freq[6], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.read_key() == "l":
+        elif key == 'l':
             new_wav = play_wave(wav_type, freq[7], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        out_wav = np.asarray(out_wav, dtype=np.int16)
-        write_wav_file("project.wav", 48000, out_wav)
+    out_wav = np.asarray(out_wav, dtype=np.int16)
+    write_wav_file("project.wav", 48000, out_wav)
 
+# from https://stackoverflow.com/questions/32671306/how-can-i-read-keyboard-input-in-python?rq=3
+
+getch = msvcrt.getch
 
 def main():
     # Start the keyboard listener in a separate thread
-    threading.Thread(target=key_listener, daemon=True).start()
+    # Collect all event until released
 
-    # Main loop
-    while True:
-        if keyboard.read_key() == "q":
-            time.sleep(2)
-            break
-
+    start_synth()
 
 if __name__ == "__main__":
     main()
