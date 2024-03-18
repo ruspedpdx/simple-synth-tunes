@@ -7,26 +7,20 @@ A simple keyboard that will generate various sound waves depending on a few sett
 that you enter when you start the program. These settings are able to be changed while the 
 program is running.
 
-You will need to run this project with Python 3.9. Here are some instructions 
-for setting up a virtual environment with a different python version.
-
-https://cat.pdx.edu/platforms/linux/how-to/pip-python-virtual-env/
-
-I was able to run this from VS Code without any issues by choosing the interpreter
-from Command Palette
-
-View > Command Palette > Python: Select Interpreter > Python 3.9.13
-
-In VS Code, you can use Ctrl + F5 to run the project without debugging. This will open up 
-a series of questions related to wave type, amplitude, etc. After you answer those questions
-you can use the home row of your computer keyboard to play notes. This will automatically be saved
-into a project.wav file that you can playback using any .wav reader.
-
 In a unix based system, from a terminal you can type:
+
+`pip install -r requirements.txt`
+
+then
 
 `python3 synth.py` 
 
 to run the program.
+
+While testing on the student Linux servers, I realized that part of the code wasn't usable due
+to root permissions and keyboard listeners. I modified all of the keyboard listening code to accept
+one character entered at a time to demonstrate the code functionality, but this is less than ideal
+for a synth experience.
 
 I used the unittest module in Python to test each of the get and select functions with 
 good and bad input.
@@ -74,6 +68,26 @@ smooth and clean, as expected from the wave generators.
 The project outfiles are sometimes invalid or corrupt, more testing is needed to find a fix for this.
 
 I saved several output files and want to add further effects using these files if I have time.
+
+
+** Notes for the original keyboard command version. I had to change this from a listener to
+a terrible get char command due to root permissions on Linux. If you want to try this version
+(the only difference is that you won't have to hit <enter> after each keystroke.)
+
+You will need to run this project with Python 3.9. Here are some instructions 
+for setting up a virtual environment with a different python version.
+
+https://cat.pdx.edu/platforms/linux/how-to/pip-python-virtual-env/
+
+I was able to run this from VS Code without any issues by choosing the interpreter
+from Command Palette
+
+View > Command Palette > Python: Select Interpreter > Python 3.9.13
+
+In VS Code, you can use Ctrl + F5 to run the project without debugging. This will open up 
+a series of questions related to wave type, amplitude, etc. After you answer those questions
+you can use the home row of your computer keyboard to play notes. This will automatically be saved
+into a project.wav file that you can playback using any .wav reader.
 
 
 MIT License

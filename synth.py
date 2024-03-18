@@ -3,8 +3,6 @@ from numpy import random
 from scipy.io import wavfile
 from scipy.io.wavfile import write
 from scipy.signal import sawtooth
-import msvcrt
-import sys
 import numpy as np
 import time
 
@@ -397,9 +395,6 @@ def start_synth():
     out_wav = np.asarray(out_wav, dtype=np.int16)
     write_wav_file("project.wav", 48000, out_wav)
 
-# from https://stackoverflow.com/questions/32671306/how-can-i-read-keyboard-input-in-python?rq=3
-
-getch = msvcrt.getch
 
 def main():
     # Start the keyboard listener in a separate thread
