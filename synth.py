@@ -1,4 +1,4 @@
-import sounddevice as sd
+import simpleaudio as sa
 from numpy import random
 from scipy.io import wavfile
 from scipy.io.wavfile import write
@@ -219,8 +219,15 @@ def play_wave(type, frequency, amplitude, duration, octave):
     else:
         wave = np.random.uniform(-amplitude, amplitude, num_samples)
     # Play the wave
-    sd.play(wave, sample_rate)
-    sd.wait()
+        
+    # Ensure that highest value is in 16-bit range
+    audio = wave * (2**15 - 1) / np.max(np.abs(wave))
+    # Convert to 16-bit data
+    audio = audio.astype(np.int16)
+    # Start playback
+    play_obj = sa.play_buffer(audio, 1, 2, sample_rate)
+    # Wait for playback to finish before exiting
+    play_obj.wait_done()
 
     # append samples to output
     output_samples = np.append(output_samples, wave)
@@ -238,9 +245,14 @@ def play_sine(frequency):
     time = np.arange(num_samples) / sample_rate
     sine_wave = amplitude * np.sin(2 * np.pi * frequency * time)
 
-    # Play the sine wave
-    sd.play(sine_wave, sample_rate)
-    sd.wait()
+    # Ensure that highest value is in 16-bit range
+    audio = sine_wave * (2**15 - 1) / np.max(np.abs(sine_wave))
+    # Convert to 16-bit data
+    audio = audio.astype(np.int16)
+    # Start playback
+    play_obj = sa.play_buffer(audio, 1, 2, sample_rate)
+    # Wait for playback to finish before exiting
+    play_obj.wait_done()
 
     # append samples to output
     sine_output_samples = np.append(sine_output_samples, sine_wave)
@@ -258,9 +270,14 @@ def play_square(frequency):
     time = np.arange(num_samples) / sample_rate
     square_wave = amplitude * np.sign(np.sin(2 * np.pi * frequency * time))
 
-    # Play the square wave
-    sd.play(square_wave, sample_rate)
-    sd.wait()
+    # Ensure that highest value is in 16-bit range
+    audio = square_wave * (2**15 - 1) / np.max(np.abs(square_wave))
+    # Convert to 16-bit data
+    audio = audio.astype(np.int16)
+    # Start playback
+    play_obj = sa.play_buffer(audio, 1, 2, sample_rate)
+    # Wait for playback to finish before exiting
+    play_obj.wait_done()
 
     # append samples to output
     square_output_samples = np.append(square_output_samples, square_wave)
@@ -278,9 +295,14 @@ def play_sawtooth(frequency):
     time = np.arange(num_samples) / sample_rate
     sawtooth_wave = amplitude * sawtooth(2 * np.pi * frequency * time)
 
-    # Play the sawtooth wave
-    sd.play(sawtooth_wave, sample_rate)
-    sd.wait()
+    # Ensure that highest value is in 16-bit range
+    audio = sawtooth_wave * (2**15 - 1) / np.max(np.abs(sawtooth_wave))
+    # Convert to 16-bit data
+    audio = audio.astype(np.int16)
+    # Start playback
+    play_obj = sa.play_buffer(audio, 1, 2, sample_rate)
+    # Wait for playback to finish before exiting
+    play_obj.wait_done()
 
     # append samples to output
     sawtooth_output_samples = np.append(sawtooth_output_samples, sawtooth_wave)
@@ -297,9 +319,14 @@ def play_noise():
     num_samples = int(sample_rate * duration)
     white_noise = np.random.uniform(-amplitude, amplitude, num_samples)
 
-    # Play the white noise
-    sd.play(white_noise, sample_rate)
-    sd.wait()
+    # Ensure that highest value is in 16-bit range
+    audio = white_noise * (2**15 - 1) / np.max(np.abs(white_noise))
+    # Convert to 16-bit data
+    audio = audio.astype(np.int16)
+    # Start playback
+    play_obj = sa.play_buffer(audio, 1, 2, sample_rate)
+    # Wait for playback to finish before exiting
+    play_obj.wait_done()
 
     # append samples to output
     noise_output_samples = np.append(noise_output_samples, white_noise)
