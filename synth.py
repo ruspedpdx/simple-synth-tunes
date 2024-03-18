@@ -13,10 +13,11 @@ def menu():
     # Default menu options, menu is redisplayed after a choice has been made
     print("Press any key in ASDF or HJKL on the home row to play a note.")
     print("Press 't' to randomly change wave type.")
-    print("Press 'r' to randomly change tuning.")  
-    print("Press 'v' to randomly change amplitude.")   
-    print("Press 'o' to randomly change octave.") 
+    print("Press 'r' to randomly change tuning.")
+    print("Press 'v' to randomly change amplitude.")
+    print("Press 'o' to randomly change octave.")
     print("Press 'q' to quit.")
+
 
 # Get wav type
 def get_type():
@@ -27,6 +28,7 @@ def get_type():
     print(f"Wave type of {type} chosen")
     return type
 
+
 # Select wave type
 def select_type():
     # Four main wave types, leaving room for other effects
@@ -34,7 +36,9 @@ def select_type():
     # Ask for user input to select type
     while True:
         try:
-            wave_type = int(input("Select the wave type: 0:Sine 1:Square 2:Sawtooth 3:Noise"))
+            wave_type = int(
+                input("Select the wave type: 0:Sine 1:Square 2:Sawtooth 3:Noise")
+            )
         except ValueError:
             print("Sorry, I didn't understand that.")
             continue
@@ -45,14 +49,15 @@ def select_type():
             print("please choose between 0 and 3.")
             continue
         else:
-             break
+            break
     type = wave[wave_type]
     print(f"Wave of {type} type chosen")
     return type
 
+
 # Get amplitude
 def get_ampl():
-    # small selection of amplitudes, needs to be expanded 
+    # small selection of amplitudes, needs to be expanded
     # and handled differently
     amplitude = [4096, 8192, 16384]
     # get ampl will return random choice
@@ -60,9 +65,10 @@ def get_ampl():
     print(f"Amplitude of {amp} chosen")
     return amp
 
+
 # Select amplitude
 def select_ampl():
-    # small selection of amplitudes, needs to be expanded 
+    # small selection of amplitudes, needs to be expanded
     # and handled differently
     amplitude = [4096, 8192, 16384]
     # ask for user input to choose amplitude
@@ -75,34 +81,40 @@ def select_ampl():
         if amp_size < 0:
             print("please choose between 0 and 2.")
             continue
-        if amp_size > 3:
+        if amp_size > 2:
             print("please choose between 0 and 2.")
             continue
         else:
-             break
+            break
     amp = amplitude[amp_size]
     print(f"Amplitude of {amp} chosen")
     return amp
 
+
 # Get octave
 def get_oct():
-    # small selection of octaves, needs to be expanded 
+    # small selection of octaves, needs to be expanded
     # and handled differently
-    octave = [.5, 1, 2]
+    octave = [0.5, 1.0, 2.0]
     # get ampl will return random choice
     oct = random.choice(octave)
     print(f"octave multipiler of {oct} chosen")
     return oct
 
+
 # Select octave
 def select_oct():
-    # small selection of octaves, needs to be expanded 
+    # small selection of octaves, needs to be expanded
     # and handled differently
     octave = [0.5, 1.0, 2.0]
     # ask for user input to choose octave
     while True:
         try:
-            oct_mult = int(input("Select the octave: 0:3 Below Middle, 1:4 Middle, 2:5 Above Middle"))
+            oct_mult = int(
+                input(
+                    "Select the octave: 0:3 Below Middle, 1:4 Middle, 2:5 Above Middle"
+                )
+            )
         except ValueError:
             print("Sorry, I didn't understand that.")
             continue
@@ -113,10 +125,11 @@ def select_oct():
             print("please choose between 0 and 2.")
             continue
         else:
-             break
+            break
     oct = octave[oct_mult]
     print(f"octave multipiler of {oct} chosen")
     return oct
+
 
 # Get key signature
 def get_key():
@@ -127,14 +140,19 @@ def get_key():
     print(f"Key of {key} chosen")
     return key
 
+
 # Get key signature
 def select_key():
     # selection of minor keys
     keys = ["C", "G", "D", "A", "E", "B", "F", "F#", "Db", "Ab", "Eb", "Bb"]
     while True:
-    # ask for user input to select key
+        # ask for user input to select key
         try:
-            key = int(input("Select the key: 0:C 1:G 2:D 3:A 4:E 5:B 6:F 7:F# 8:Db 9:Ab 10:Eb 11:Bb"))
+            key = int(
+                input(
+                    "Select the key: 0:C 1:G 2:D 3:A 4:E 5:B 6:F 7:F# 8:Db 9:Ab 10:Eb 11:Bb"
+                )
+            )
         except ValueError:
             print("Sorry, I didn't understand that.")
             continue
@@ -145,42 +163,44 @@ def select_key():
             print("please choose between 0 and 11.")
             continue
         else:
-             break
+            break
     sign = keys[key]
     print(f"Key of {sign} chosen")
     return sign
+
 
 # return frequencies of given key
 # hard coded, should be done with frequency generator
 def get_frequencies(key):
     frequencies = []
     if key == "c" or key == "C":
-            frequencies = [261.63, 293.66, 311.13, 349.23, 392.00, 415.30, 466.16, 523.25]
+        frequencies = [261.63, 293.66, 311.13, 349.23, 392.00, 415.30, 466.16, 523.25]
     elif key == "g" or key == "G":
-            frequencies = [392.00, 440.00, 466.16, 523.25, 587.33, 622.25, 698.46, 783.99]
+        frequencies = [392.00, 440.00, 466.16, 523.25, 587.33, 622.25, 698.46, 783.99]
     elif key == "d" or key == "D":
-            frequencies = [293.66, 392.63, 349.23, 392.00, 440.00, 466.16, 523.25, 587.33]
+        frequencies = [293.66, 392.63, 349.23, 392.00, 440.00, 466.16, 523.25, 587.33]
     elif key == "a" or key == "A":
-            frequencies = [440.00, 493.88, 523.25, 587.33, 659.26, 698.46, 783.99, 880.00]
+        frequencies = [440.00, 493.88, 523.25, 587.33, 659.26, 698.46, 783.99, 880.00]
     elif key == "e" or key == "E":
-            frequencies = [392.63, 369.99, 392.00, 440.00, 493.88, 523.25, 587.33, 659.26]
+        frequencies = [392.63, 369.99, 392.00, 440.00, 493.88, 523.25, 587.33, 659.26]
     elif key == "b" or key == "B":
-            frequencies = [493.88, 554.37, 587.33, 659.26, 739.99, 783.99, 880.00, 987.77]
+        frequencies = [493.88, 554.37, 587.33, 659.26, 739.99, 783.99, 880.00, 987.77]
     elif key == "f" or key == "F":
-            frequencies = [349.23, 392.00, 415.30, 466.16, 523.25, 554.37, 622.25, 698.46]
+        frequencies = [349.23, 392.00, 415.30, 466.16, 523.25, 554.37, 622.25, 698.46]
     elif key == "f#" or key == "F#":
-            frequencies = [369.99, 415.30, 440.00, 493.88, 554.37, 587.33, 659.26, 739.99]
+        frequencies = [369.99, 415.30, 440.00, 493.88, 554.37, 587.33, 659.26, 739.99]
     elif key == "db" or key == "Db":
-            frequencies = [277.18, 311.13, 329.63, 369.99, 415.30, 440.00, 493.88, 554.37]
+        frequencies = [277.18, 311.13, 329.63, 369.99, 415.30, 440.00, 493.88, 554.37]
     elif key == "ab" or key == "Ab":
-            frequencies = [415.30, 466.16, 493.88, 554.37, 622.25, 659.26, 739.99, 830.61]
+        frequencies = [415.30, 466.16, 493.88, 554.37, 622.25, 659.26, 739.99, 830.61]
     elif key == "eb" or key == "Eb":
-            frequencies = [311.13, 349.23, 369.99, 415.30, 466.16, 493.88, 554.37, 622.25]
+        frequencies = [311.13, 349.23, 369.99, 415.30, 466.16, 493.88, 554.37, 622.25]
     elif key == "bb" or key == "Bb":
-            frequencies = [466.16, 523.25, 554.37, 622.25, 698.46, 739.99, 830.61, 932.33]
+        frequencies = [466.16, 523.25, 554.37, 622.25, 698.46, 739.99, 830.61, 932.33]
     else:
-            print("Invalid key signature!")
+        print("Invalid key signature!")
     return frequencies
+
 
 # Play and return wave of given frequency
 # Generic wave player, may be able to replace other play_ functions, still needs more testing
@@ -206,6 +226,7 @@ def play_wave(type, frequency, amplitude, duration, octave):
     output_samples = np.append(output_samples, wave)
     return output_samples
 
+
 # Play and return sine wave of given frequency
 def play_sine(frequency):
     sine_output_samples = []
@@ -225,6 +246,7 @@ def play_sine(frequency):
     sine_output_samples = np.append(sine_output_samples, sine_wave)
     return sine_output_samples
 
+
 # Play and return square wave of given frequency
 def play_square(frequency):
     square_output_samples = []
@@ -241,8 +263,9 @@ def play_square(frequency):
     sd.wait()
 
     # append samples to output
-    square_output_samples  = np.append(square_output_samples , square_wave)
-    return square_output_samples 
+    square_output_samples = np.append(square_output_samples, square_wave)
+    return square_output_samples
+
 
 # Play and return sawtooth wave of given frequency
 def play_sawtooth(frequency):
@@ -260,8 +283,8 @@ def play_sawtooth(frequency):
     sd.wait()
 
     # append samples to output
-    sawtooth_output_samples  = np.append(sawtooth_output_samples , sawtooth_wave)
-    return sawtooth_output_samples 
+    sawtooth_output_samples = np.append(sawtooth_output_samples, sawtooth_wave)
+    return sawtooth_output_samples
 
 
 # Play and return noise
@@ -279,12 +302,14 @@ def play_noise():
     sd.wait()
 
     # append samples to output
-    noise_output_samples  = np.append(noise_output_samples , white_noise)
-    return noise_output_samples 
+    noise_output_samples = np.append(noise_output_samples, white_noise)
+    return noise_output_samples
+
 
 # Write array to wav file
 def write_wav_file(filename, sample_rate, samples):
     write(filename, sample_rate, samples)
+
 
 def key_listener():
     # Start up settings
@@ -296,59 +321,61 @@ def key_listener():
     freq = get_frequencies(tuning)
     menu()
     while True:
-        if keyboard.is_pressed('t'):
+        if keyboard.is_pressed("t"):
             wav_type == ""
             wav_type = get_type()
             menu()
-        if keyboard.is_pressed('v'):
+        if keyboard.is_pressed("v"):
             amplitude == ""
             amplitude = get_ampl()
             menu()
-        if keyboard.is_pressed('o'):
+        if keyboard.is_pressed("o"):
             octave == ""
             octave = get_oct()
             menu()
-        if keyboard.is_pressed('r'):
+        if keyboard.is_pressed("r"):
             freq == []
             tuning = get_key()
             freq = get_frequencies(tuning)
             menu()
-        if keyboard.is_pressed('a'):
+        if keyboard.is_pressed("a"):
             new_wav = play_wave(wav_type, freq[0], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed('s'):
+        if keyboard.is_pressed("s"):
             new_wav = play_wave(wav_type, freq[1], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed('d'):
+        if keyboard.is_pressed("d"):
             new_wav = play_wave(wav_type, freq[2], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed('f'):
+        if keyboard.is_pressed("f"):
             new_wav = play_wave(wav_type, freq[3], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed('h'):
+        if keyboard.is_pressed("h"):
             new_wav = play_wave(wav_type, freq[4], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed('j'):
+        if keyboard.is_pressed("j"):
             new_wav = play_wave(wav_type, freq[5], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed('k'):
+        if keyboard.is_pressed("k"):
             new_wav = play_wave(wav_type, freq[6], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
-        if keyboard.is_pressed('l'):
+        if keyboard.is_pressed("l"):
             new_wav = play_wave(wav_type, freq[7], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
         out_wav = np.asarray(out_wav, dtype=np.int16)
         write_wav_file("project.wav", 48000, out_wav)
 
+
 def main():
     # Start the keyboard listener in a separate thread
     threading.Thread(target=key_listener, daemon=True).start()
-    
+
     # Main loop
     while True:
-        if keyboard.is_pressed('q'):
+        if keyboard.is_pressed("q"):
             time.sleep(2)
             break
+
 
 if __name__ == "__main__":
     main()
