@@ -6,9 +6,11 @@ from scipy.signal import sawtooth
 import keyboard
 import threading
 import numpy as np
+import time
 
 # Start menu
 def menu():
+    # Default menu options, menu is redisplayed after a choice has been made
     print("Press any key on the home row to play a note.")
     print("Press 't' to randomly change wave type.")
     print("Press 'r' to randomly change tuning.")    
@@ -17,14 +19,18 @@ def menu():
 
 # Get wav type
 def get_type():
+    # Four main wave types, leaving room for other effects
     wave = ["Sine", "Square", "Sawtooth", "Noise"]
+    # For the get wav type function a random choice is made
     type = random.choice(wave)
     print(f"Wave type of {type} chosen")
     return type
 
 # Select wave type
 def select_type():
+    # Four main wave types, leaving room for other effects
     wave = ["Sine", "Square", "Sawtooth", "Noise"]
+    # Ask for user input to select type
     while True:
         try:
             wave_type = int(input("Select the wave type: 0:Sine 1:Square 2:Sawtooth 3:Noise"))
@@ -39,20 +45,26 @@ def select_type():
             continue
         else:
              break
-    sign = wave[wave_type]
-    print(f"Wave of {sign} type chosen")
-    return sign
+    type = wave[wave_type]
+    print(f"Wave of {type} type chosen")
+    return type
 
 # Get amplitude
 def get_ampl():
+    # small selection of amplitudes, needs to be expanded 
+    # and handled differently
     amplitude = [4096, 8192, 16384]
+    # get ampl will return random choice
     amp = random.choice(amplitude)
     print(f"Amplitude of {amp} chosen")
     return amp
 
 # Select wave type
 def select_ampl():
+    # small selection of amplitudes, needs to be expanded 
+    # and handled differently
     amplitude = [4096, 8192, 16384]
+    # ask for user input to choose amplitude
     while True:
         try:
             amp_size = int(input("Select the amplitude: 0:Half, 1:Normal, 2:Double"))
@@ -74,15 +86,19 @@ def select_ampl():
 
 # Get key signature
 def get_key():
+    # selection of minor keys
     keys = ["C", "G", "D", "A", "E", "B", "F", "F#", "Db", "Ab" "Eb", "Bb"]
+    # get key will return a random choice
     key = random.choice(keys)
     print(f"Key of {key} chosen")
     return key
 
 # Get key signature
 def select_key():
+    # selection of minor keys
     keys = ["C", "G", "D", "A", "E", "B", "F", "F#", "Db", "Ab", "Eb", "Bb"]
     while True:
+    # ask for user input to select key
         try:
             key = int(input("Select the key: 0:C 1:G 2:D 3:A 4:E 5:B 6:F 7:F# 8:Db 9:Ab 10:Eb 11:Bb"))
         except ValueError:
@@ -101,6 +117,7 @@ def select_key():
     return sign
 
 # return frequencies of given key
+# hard coded, should be done with frequency generator
 def get_frequencies(key):
     frequencies = []
     if key == "c" or key == "C":
@@ -131,7 +148,8 @@ def get_frequencies(key):
             print("Invalid key signature!")
     return frequencies
 
-# Play and return sine wave of given frequency
+# Play and return wave of given frequency
+# Generic wave player, may be able to replace other play_ functions, still needs more testing
 def play_wave(type, frequency, amplitude, duration):
     output_samples = []
     sample_rate = 48000
@@ -145,7 +163,7 @@ def play_wave(type, frequency, amplitude, duration):
     elif type == "Sawtooth":
         wave = amplitude * sawtooth(2 * np.pi * frequency * time)
     else:
-        wave = play_noise()
+        wave = np.random.uniform(-amplitude, amplitude, num_samples)
     # Play the wave
     sd.play(wave, sample_rate)
     sd.wait()
@@ -238,7 +256,7 @@ def key_listener():
     # Start up settings
     wav_type = select_type()
     tuning = select_key()
-    amplitude = 8192
+    amplitude = select_ampl()
     out_wav = []
     freq = get_frequencies(tuning)
     menu()
@@ -290,6 +308,7 @@ def main():
     # Main loop
     while True:
         if keyboard.is_pressed('q'):
+            time.sleep(2)
             break
 
 if __name__ == "__main__":
