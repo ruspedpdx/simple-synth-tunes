@@ -1,7 +1,39 @@
-# simple-synth-tunes
 # Russ Pedersen
+# simple-synth-tunes
 # Winter 2024
 An interesting synthesizer written in Python
+
+A simple keyboard that will generate various sound waves depending on a few settings
+that you enter when you start the program. These settings are able to be changed while the 
+program is running.
+
+You will need to run this project with Python 3.9. Here are some instructions 
+for setting up a virtual environment with a different python version.
+
+https://cat.pdx.edu/platforms/linux/how-to/pip-python-virtual-env/
+
+I was able to run this from VS Code without any issues by choosing the interpreter
+from Command Palette
+
+View > Command Palette > Python: Select Interpreter > Python 3.9.13
+
+In VS Code, you can use Ctrl + F5 to run the project without debugging. This will open up 
+a series of questions related to wave type, amplitude, etc. After you answer those questions
+you can use the home row of your computer keyboard to play notes. This will automatically be saved
+into a project.wav file that you can playback using any .wav reader.
+
+In a unix based system, from a terminal you can type:
+
+`python3 synth.py` 
+
+to run the program.
+
+I used the unittest module in Python to test each of the get and select functions with 
+good and bad input.
+
+The project1.wav, project2.wav and project3.wav files are output from various tests.
+
+# Debrief
 
 I first tried to write a simple function to play a sine wave when a key was pressed using 
 the termion and rodio crates in Rust. I was never able to get the sine wave to play and save, 
@@ -42,3 +74,26 @@ smooth and clean, as expected from the wave generators.
 The project outfiles are sometimes invalid or corrupt, more testing is needed to find a fix for this.
 
 I saved several output files and want to add further effects using these files if I have time.
+
+
+MIT License
+
+Copyright (c) 2024 ruspedpdx
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
