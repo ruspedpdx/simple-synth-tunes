@@ -11,10 +11,11 @@ import time
 # Start menu
 def menu():
     # Default menu options, menu is redisplayed after a choice has been made
-    print("Press any key on the home row to play a note.")
+    print("Press any key in ASDF or HJKL on the home row to play a note.")
     print("Press 't' to randomly change wave type.")
-    print("Press 'r' to randomly change tuning.")    
-    print("Press 'v' to randomly amplitude.") 
+    print("Press 'r' to randomly change tuning.")  
+    print("Press 'v' to randomly change amplitude.")   
+    print("Press 'o' to randomly change octave.") 
     print("Press 'q' to quit.")
 
 # Get wav type
@@ -83,6 +84,39 @@ def select_ampl():
     print(f"Amplitude of {amp} chosen")
     return amp
 
+# Get octave
+def get_oct():
+    # small selection of octaves, needs to be expanded 
+    # and handled differently
+    octave = [.5, 1, 2]
+    # get ampl will return random choice
+    oct = random.choice(octave)
+    print(f"octave multipiler of {oct} chosen")
+    return oct
+
+# Select wave type
+def select_oct():
+    # small selection of octaves, needs to be expanded 
+    # and handled differently
+    octave = [.5, 1, 2]
+    # ask for user input to choose octave
+    while True:
+        try:
+            oct_mult = int(input("Select the octave: 0:3 Below Middle, 1:4 Middle, 2:5 Above Middle"))
+        except ValueError:
+            print("Sorry, I didn't understand that.")
+            continue
+        if oct_mult < 0:
+            print("please choose between 0 and 2.")
+            continue
+        if oct_mult > 3:
+            print("please choose between 0 and 2.")
+            continue
+        else:
+             break
+    oct = octave[oct_mult]
+    print(f"octave multipiler of {oct} chosen")
+    return oct
 
 # Get key signature
 def get_key():
@@ -150,10 +184,10 @@ def get_frequencies(key):
 
 # Play and return wave of given frequency
 # Generic wave player, may be able to replace other play_ functions, still needs more testing
-def play_wave(type, frequency, amplitude, duration):
+def play_wave(type, frequency, amplitude, duration, octave):
     output_samples = []
     sample_rate = 48000
-
+    frequency = frequency * octave
     num_samples = int(sample_rate * duration)
     time = np.arange(num_samples) / sample_rate
     if type == "Sine":
@@ -257,6 +291,7 @@ def key_listener():
     wav_type = select_type()
     tuning = select_key()
     amplitude = select_ampl()
+    octave = select_oct()
     out_wav = []
     freq = get_frequencies(tuning)
     menu()
@@ -269,34 +304,38 @@ def key_listener():
             amplitude == ""
             amplitude = get_ampl()
             menu()
+        if keyboard.is_pressed('o'):
+            octave == ""
+            octave = get_oct()
+            menu()
         if keyboard.is_pressed('r'):
             freq == []
             tuning = get_key()
             freq = get_frequencies(tuning)
             menu()
         if keyboard.is_pressed('a'):
-            new_wav = play_wave(wav_type, freq[0], amplitude, 0.2727)
+            new_wav = play_wave(wav_type, freq[0], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('s'):
-            new_wav = play_wave(wav_type, freq[1], amplitude, 0.2727)
+            new_wav = play_wave(wav_type, freq[1], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('d'):
-            new_wav = play_wave(wav_type, freq[2], amplitude, 0.2727)
+            new_wav = play_wave(wav_type, freq[2], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('f'):
-            new_wav = play_wave(wav_type, freq[3], amplitude, 0.2727)
+            new_wav = play_wave(wav_type, freq[3], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('h'):
-            new_wav = play_wave(wav_type, freq[4], amplitude, 0.2727)
+            new_wav = play_wave(wav_type, freq[4], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('j'):
-            new_wav = play_wave(wav_type, freq[5], amplitude, 0.2727)
+            new_wav = play_wave(wav_type, freq[5], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('k'):
-            new_wav = play_wave(wav_type, freq[6], amplitude, 0.2727)
+            new_wav = play_wave(wav_type, freq[6], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
         if keyboard.is_pressed('l'):
-            new_wav = play_wave(wav_type, freq[7], amplitude, 0.2727)
+            new_wav = play_wave(wav_type, freq[7], amplitude, 0.2727, octave)
             out_wav = np.append(out_wav, new_wav)
         out_wav = np.asarray(out_wav, dtype=np.int16)
         write_wav_file("project.wav", 48000, out_wav)
