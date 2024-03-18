@@ -60,7 +60,7 @@ def get_ampl():
     print(f"Amplitude of {amp} chosen")
     return amp
 
-# Select wave type
+# Select amplitude
 def select_ampl():
     # small selection of amplitudes, needs to be expanded 
     # and handled differently
@@ -94,11 +94,11 @@ def get_oct():
     print(f"octave multipiler of {oct} chosen")
     return oct
 
-# Select wave type
+# Select octave
 def select_oct():
     # small selection of octaves, needs to be expanded 
     # and handled differently
-    octave = [.5, 1, 2]
+    octave = [0.5, 1.0, 2.0]
     # ask for user input to choose octave
     while True:
         try:
@@ -109,7 +109,7 @@ def select_oct():
         if oct_mult < 0:
             print("please choose between 0 and 2.")
             continue
-        if oct_mult > 3:
+        if oct_mult > 2:
             print("please choose between 0 and 2.")
             continue
         else:
@@ -121,7 +121,7 @@ def select_oct():
 # Get key signature
 def get_key():
     # selection of minor keys
-    keys = ["C", "G", "D", "A", "E", "B", "F", "F#", "Db", "Ab" "Eb", "Bb"]
+    keys = ["C", "G", "D", "A", "E", "B", "F", "F#", "Db", "Ab", "Eb", "Bb"]
     # get key will return a random choice
     key = random.choice(keys)
     print(f"Key of {key} chosen")
