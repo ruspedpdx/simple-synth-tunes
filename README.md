@@ -1,7 +1,9 @@
 # Russ Pedersen
-# simple-synth-tunes
-# Winter 2024
+## simple-synth-tunes
+### Winter 2024
 An interesting synthesizer written in Python
+
+## The Project
 
 A simple keyboard that will generate various sound waves depending on a few settings
 that you enter when you start the program. These settings are able to be changed while the 
@@ -27,7 +29,7 @@ good and bad input.
 
 The project1.wav, project2.wav and project3.wav files are output from various tests.
 
-# Process notes
+## Process notes
 
 I first tried to write a simple function to play a sine wave when a key was pressed using 
 the termion and rodio crates in Rust. I was never able to get the sine wave to play and save, 
@@ -89,6 +91,7 @@ a series of questions related to wave type, amplitude, etc. After you answer tho
 you can use the home row of your computer keyboard to play notes. This will automatically be saved
 into a project.wav file that you can playback using any .wav reader.
 
+## License
 
 MIT License
 
